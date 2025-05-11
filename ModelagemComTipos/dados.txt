@@ -1,0 +1,34 @@
+CREATE TABLE SelecaoFiltro (
+    ServicoId CHAR(36) PRIMARY KEY,  -- Usando GUID como chave primária
+    Nome VARCHAR(255) NOT NULL,
+    TipoFiltroRelatorio INT NOT NULL,  -- Tipo de filtro (Retenção, Categorias, etc.)
+    Departamento INT NOT NULL,
+    DataInicial DATETIME NOT NULL,
+    DataFinal DATETIME NOT NULL,
+    Ativo BOOLEAN NOT NULL
+);
+
+
+CREATE TABLE SelecaoFiltroQualquer (
+    Id CHAR(36) PRIMARY KEY,  -- Usando GUID como chave primária
+    Chave VARCHAR(255) NOT NULL,
+    Valor TEXT,  -- Pode ser uma lista de valores (usar uma string separada por vírgulas, por exemplo)
+    SelecaoFiltroId CHAR(36),  -- Chave estrangeira para SelecaoFiltro
+    FOREIGN KEY (SelecaoFiltroId) REFERENCES SelecaoFiltro(ServicoId) ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE FiltrosCategorias (
+    FiltrosCategoriasId CHAR(36) PRIMARY KEY,  -- Usando GUID como chave primária
+    SelecaoFiltroId CHAR(36) NOT NULL,  -- Referência ao SelecaoFiltro
+    FOREIGN KEY (SelecaoFiltroId) REFERENCES SelecaoFiltro(ServicoId) ON DELETE CASCADE
+);
+
+
+CREATE TABLE SelecaoFiltroCategoria (
+    SelecaoFiltroCategoriaId CHAR(36) PRIMARY KEY,  -- Usando GUID como chave primária
+    Nome VARCHAR(255) NOT NULL,
+    FiltrosCategoriasId CHAR(36) NOT NULL,  -- Chave estrangeira para FiltrosCategorias
+    FOREIGN KEY (FiltrosCategoriasId) REFERENCES FiltrosCategorias(FiltrosCategoriasId) ON DELETE CASCADE
+);
