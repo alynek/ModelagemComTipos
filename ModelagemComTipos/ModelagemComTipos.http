@@ -1,0 +1,6 @@
+@ModelagemComTipos_HostAddress = http://localhost:5134
+
+GET {{ModelagemComTipos_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
